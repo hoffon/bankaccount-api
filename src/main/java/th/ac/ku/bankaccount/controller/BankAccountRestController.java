@@ -5,6 +5,7 @@ import th.ac.ku.bankaccount.data.BankAccountRepository;
 import th.ac.ku.bankaccount.model.BankAccount;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/bankaccount")
@@ -29,7 +30,11 @@ public class BankAccountRestController {
 
     @GetMapping("/{id}")
     public BankAccount getOne(@PathVariable int id) {
-        return repository.findById(id).get();
+        try{
+            return repository.findById(id).get();
+        }catch(NoSuchElementException e){
+            return null;
+        }
     }
     @PostMapping
     public BankAccount create(@RequestBody BankAccount bankAccount) {
